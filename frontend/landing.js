@@ -9,17 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   loadLiveAuditPreview();
   startTerminalSimulation();
 
-  // Bind CTA buttons to check auth before navigating
-  const ctas = document.querySelectorAll('.nav-cta, .btn-hero-primary, .btn-hero-primary.btn-large');
-  ctas.forEach(cta => {
-    cta.addEventListener('click', (e) => {
-      const token = sessionStorage.getItem('reclaim_token');
-      if (!token) {
-        e.preventDefault();
-        openAuthModal();
-      }
-    });
-  });
+
 
   const btnClose = document.getElementById('btn-close-auth');
   if (btnClose) btnClose.addEventListener('click', closeAuthModal);
@@ -98,15 +88,9 @@ function fmtINR(n) {
   return new Intl.NumberFormat('en-IN', { maximumFractionDigits: 0 }).format(Math.round(n));
 }
 
-// Fetch stats and update all counters on landing page
 async function loadLiveStats() {
   try {
-    const token = sessionStorage.getItem('reclaim_token');
-    if (!token) return; // Do not fetch stats if unauthenticated
-
-    const res = await fetch(`${API}/api/stats`, {
-      headers: { 'Authorization': `Bearer ${token}` }
-    });
+    const res = await fetch(`${API}/api/stats`);
     if (!res.ok) throw new Error('API Offline or Unauthorized');
     const s = await res.json();
 

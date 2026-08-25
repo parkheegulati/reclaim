@@ -1,14 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <script>
-    (function() {
-      const token = sessionStorage.getItem("reclaim_token");
-      if (!token) {
-        window.location.href = "/";
-      }
-    })();
-  </script>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>reclaim. — AI Revenue Recovery Dashboard</title>
@@ -98,7 +91,6 @@
         <button class="btn btn-ghost" onclick="resetData()">Reset</button>
         <div class="merchant-profile-strip" style="display:flex; align-items:center; gap:0.75rem; margin-left:1rem; border-left:1px solid rgba(255,255,255,0.1); padding-left:1rem;">
           <span id="merchant-name-display" style="font-size:0.88rem; font-weight:600; color:white">Loading Profile...</span>
-          <button class="btn btn-ghost" onclick="logout()" style="color:#EF4444; padding:0.4rem 0.75rem;">Logout</button>
         </div>
       </div>
     </header>

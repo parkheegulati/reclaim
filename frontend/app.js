@@ -758,8 +758,6 @@ async function apiFetch(path, options = {}) {
   });
   if (res.status === 401) {
     sessionStorage.removeItem("reclaim_token");
-    window.location.href = "/";
-    return;
   }
   if (!res.ok) {
     const err = await res.json().catch(() => ({ detail: res.statusText }));

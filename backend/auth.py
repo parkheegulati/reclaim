@@ -70,24 +70,6 @@ def create_access_token(merchant_id: str, email: str) -> str:
 
 async def get_current_merchant(token: Optional[str] = Depends(oauth2_scheme)) -> dict:
     """
-    FastAPI dependency to extract and authenticate the current merchant from JWT.
-    Raises HTTPException(401) on failure.
+    FastAPI dependency bypassed to always return the default merchant for the demo.
     """
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    
-    if not token:
-        raise credentials_exception
-        
-    try:
-        payload = jwt.decode(token, JWT_SECRET, algorithms=[ALGORITHM])
-        merchant_id: str = payload.get("sub")
-        email: str = payload.get("email")
-        if merchant_id is None or email is None:
-            raise credentials_exception
-        return {"merchant_id": merchant_id, "email": email}
-    except JWTError:
-        raise credentials_exception
+    return {"merchant_id": "merchant_demo_1", "email": "demo1@reclaim.test"}
