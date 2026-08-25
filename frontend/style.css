@@ -134,7 +134,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text-primar
 .btn-primary:hover:not(:disabled)  { background: var(--primary-dark); }
 .btn-primary.running { background: var(--warning); animation: btn-pulse 1.5s infinite; }
 @keyframes btn-pulse { 0%,100%{opacity:1} 50%{opacity:0.8} }
-.btn-outline  { background: white; color: var(--text-primary); border-color: var(--border); }
+.btn-outline  { background: var(--bg-card); color: var(--text-primary); border-color: var(--border); }
 .btn-outline:hover:not(:disabled)  { border-color: var(--primary); color: var(--primary); }
 .btn-ghost    { background: transparent; color: var(--text-secondary); border-color: transparent; }
 .btn-ghost:hover { background: var(--bg); color: var(--text-primary); }
@@ -316,7 +316,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text-primar
   padding: 0.4rem 0.75rem; border: 1px solid var(--border);
   border-radius: var(--radius-sm); font-family: var(--font);
   font-size: 0.8rem; color: var(--text-secondary);
-  background: white; cursor: pointer;
+  background: var(--bg-card); cursor: pointer;
 }
 .filter-select:focus { outline: none; border-color: var(--primary); }
 
@@ -450,7 +450,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text-primar
 /* ─── Progress Drawer ─────────────────────────────────── */
 .progress-drawer {
   position: fixed; bottom: 0; left: var(--sidebar-w); right: 0;
-  background: white; border-top: 1px solid var(--border);
+  background: var(--bg-card); border-top: 1px solid var(--border);
   box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
   z-index: 60; display: none;
   max-height: 280px;
@@ -484,7 +484,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text-primar
 }
 .modal-overlay.open { display: flex; }
 .modal {
-  background: white; border-radius: var(--radius-lg);
+  background: var(--bg-card); border-radius: var(--radius-lg);
   width: 100%; max-width: 640px; max-height: 80vh;
   overflow: hidden; display: flex; flex-direction: column;
   box-shadow: 0 24px 60px rgba(0,0,0,0.2);
@@ -498,7 +498,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text-primar
 .modal-header h3 { font-size: 0.95rem; font-weight: 700; }
 .modal-close {
   width: 28px; height: 28px; border-radius: 6px; border: 1px solid var(--border);
-  background: white; color: var(--text-muted); cursor: pointer; font-size: 0.9rem;
+  background: var(--bg-card); color: var(--text-muted); cursor: pointer; font-size: 0.9rem;
   transition: all 0.15s;
 }
 .modal-close:hover { background: var(--bg); color: var(--text-primary); }
@@ -522,7 +522,7 @@ body { font-family: var(--font); background: var(--bg); color: var(--text-primar
 .toast {
   padding: 0.8rem 1.1rem; border-radius: var(--radius-md); font-size: 0.83rem; font-weight: 500;
   box-shadow: var(--shadow-md); border: 1px solid transparent; max-width: 340px;
-  animation: toast-in 0.25s ease; background: white;
+  animation: toast-in 0.25s ease; background: var(--bg-card);
 }
 @keyframes toast-in { from { opacity: 0; transform: translateY(8px) scale(0.96); } }
 .toast-success { border-color: #86EFAC; color: #166534; background: #F0FDF4; }
@@ -544,3 +544,38 @@ body { font-family: var(--font); background: var(--bg); color: var(--text-primar
 
 @keyframes count-pop { 0%,100%{transform:scale(1)} 50%{transform:scale(1.04)} }
 .count-pop { animation: count-pop 0.35s ease; }
+
+/* ─── Dark Theme Variables ────────────────────────────── */
+body.dark-theme {
+  --bg:            #060a13; /* Deep dark background */
+  --bg-card:       #0f172a; /* Dark card background */
+  --bg-sidebar:    #0f172a; /* Dark sidebar background */
+  --border:        rgba(255, 255, 255, 0.08); /* Semi-transparent border */
+  --border-focus:  #0B72E7;
+
+  --text-primary:   #f1f5f9; /* White-ish primary text */
+  --text-secondary: #94a3b8; /* Muted secondary text */
+  --text-muted:     #64748b; /* Highly muted text */
+
+  --primary-light:  rgba(11, 114, 231, 0.15); /* Light blue background glow */
+  --success-light:  rgba(22, 163, 74, 0.15);
+  --warning-light:  rgba(245, 158, 11, 0.15);
+  --danger-light:   rgba(220, 38, 38, 0.15);
+}
+
+/* Adjustments for dark theme charts, headers, and profiles */
+body.dark-theme .header {
+  background: rgba(15, 23, 42, 0.8);
+}
+body.dark-theme .toast {
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+}
+body.dark-theme .modal {
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+}
+body.dark-theme .bar-outer {
+  background: rgba(255, 255, 255, 0.08);
+}
+body.dark-theme .bar-grey {
+  background: #1e293b;
+}

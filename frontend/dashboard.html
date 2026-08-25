@@ -24,9 +24,8 @@
   <!-- ── Sidebar ─────────────────────────────────────── -->
   <aside class="sidebar">
     <div class="sidebar-logo">
-      <div class="logo-mark">r</div>
       <div>
-        <div class="logo-name">reclaim<span style="color:var(--primary)">.</span></div>
+        <div class="logo-name" style="font-size: 1.4rem; font-weight: 900; letter-spacing: -0.04em;">reclaim<span style="color:var(--primary)">.</span></div>
         <div class="logo-sub">Revenue Recovery</div>
       </div>
     </div>
@@ -58,6 +57,10 @@
     </nav>
 
     <div class="sidebar-footer">
+      <button class="btn btn-ghost" id="dark-mode-toggle" onclick="toggleDarkMode()" style="width: 100%; justify-content: flex-start; gap: 0.5rem; margin-bottom: 0.75rem; padding: 0.4rem 0.5rem; font-size: 0.8rem; border: 1px solid var(--border);">
+        <svg id="dark-mode-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <span id="dark-mode-text">Dark Mode</span>
+      </button>
       <div class="api-status" id="api-status">
         <span class="status-dot"></span>
         <span id="status-text">Checking...</span>
