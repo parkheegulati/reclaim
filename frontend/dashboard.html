@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    (function() {
+      const token = sessionStorage.getItem("reclaim_token");
+      if (!token) {
+        window.location.href = "/";
+      }
+    })();
+  </script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>reclaim. — AI Revenue Recovery Dashboard</title>
+  <meta name="description" content="Production-grade AI agent that detects failed payments, diagnoses root cause, and recovers lost revenue automatically." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/style.css?v=3" />
+  <style>
+    /* Pulse ring animation for voice assistant */
+    @keyframes pulse-ring {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124,58,237,0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(124,58,237,0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(124,58,237,0); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Sidebar ─────────────────────────────────────── -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="logo-mark">r</div>
+      <div>
+        <div class="logo-name">reclaim<span style="color:var(--primary)">.</span></div>
+        <div class="logo-sub">Revenue Recovery</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Dashboard</div>
+      <a class="nav-item active" href="#overview" onclick="switchTab('overview',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        Overview
+      </a>
+      <a class="nav-item" href="#feed" onclick="switchTab('feed',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        AI Decision Feed
+      </a>
+      <a class="nav-item" href="#transactions" onclick="switchTab('transactions',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        Transactions
+      </a>
+      <a class="nav-item" href="#compliance" onclick="switchTab('compliance',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        Compliance
+      </a>
+
+      <div class="nav-section-label" style="margin-top:1.5rem">System</div>
+      <a class="nav-item" href="#audit" onclick="switchTab('audit',this)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        Audit Trail
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <div class="api-status" id="api-status">
+        <span class="status-dot"></span>
+        <span id="status-text">Checking...</span>
+      </div>
+      <div class="sidebar-version">reclaim. v2.0 · Track 03</div>
+    </div>
+  </aside>
+
+  <!-- ── Main Content ────────────────────────────────── -->
+  <div class="layout">
+
+    <!-- Top Bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <h1 class="page-title" id="page-title">Overview</h1>
+        <span class="page-badge" id="page-badge">AI Revenue Recovery</span>
+      </div>
+      <div class="topbar-right">
+        <button class="btn btn-outline" id="btn-load" onclick="loadTransactions()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Load Payments
+        </button>
+        <button class="btn btn-primary" id="btn-recover" onclick="runRecovery()" disabled>
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Run Agent
+        </button>
+        <button class="btn btn-primary" id="btn-simulate" onclick="runSimulation()" style="background: var(--success); border-color: var(--success);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+          Run Demo Simulation
+        </button>
+        <button class="btn btn-ghost" onclick="resetData()">Reset</button>
+        <div class="merchant-profile-strip" style="display:flex; align-items:center; gap:0.75rem; margin-left:1rem; border-left:1px solid rgba(255,255,255,0.1); padding-left:1rem;">
+          <span id="merchant-name-display" style="font-size:0.88rem; font-weight:600; color:white">Loading Profile...</span>
+          <button class="btn btn-ghost" onclick="logout()" style="color:#EF4444; padding:0.4rem 0.75rem;">Logout</button>
+        </div>
+      </div>
+    </header>
+
+    <!-- ── TAB: Overview ──────────────────────────────── -->
+    <div class="tab-content active" id="tab-overview">
+
+      <!-- Hero Metrics -->
+      <div class="metrics-bar">
+        <div class="metric-card metric-primary">
+          <div class="metric-label">Revenue Recovered</div>
+          <div class="metric-value" id="m-recovered">₹0</div>
+          <div class="metric-sub" id="m-recovered-sub">0 transactions</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Recovery Rate</div>
+          <div class="metric-value" id="m-rate">0%</div>
+          <div class="metric-progress"><div class="metric-progress-bar" id="m-rate-bar" style="width:0%"></div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Revenue at Risk</div>
+          <div class="metric-value metric-risk" id="m-risk">₹0</div>
+          <div class="metric-sub" id="m-risk-sub">0 failed payments</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Avg Recovery Time</div>
+          <div class="metric-value" id="m-time">—</div>
+          <div class="metric-sub">per transaction</div>
+        </div>
+      </div>
+
+      <!-- Recovery Funnel + Comparison -->
+      <div class="two-col">
+
+        <!-- Recovery Funnel -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Recovery Funnel</h2>
+            <span class="card-hint">Transaction flow through the AI agent</span>
+          </div>
+          <div class="card-body">
+            <div class="funnel" id="funnel">
+              <div class="funnel-step funnel-total">
+                <div class="funnel-label">Total Detected</div>
+                <div class="funnel-count" id="f-total">0</div>
+                <div class="funnel-bar" style="width:100%; background:#e2e8f0"></div>
+              </div>
+              <div class="funnel-arrow">↓</div>
+              <div class="funnel-step funnel-actionable">
+                <div class="funnel-label">Actionable</div>
+                <div class="funnel-count" id="f-actionable">0</div>
+                <div class="funnel-bar funnel-bar-blue" id="f-actionable-bar" style="width:0%"></div>
+              </div>
+              <div class="funnel-arrow">↓</div>
+              <div class="funnel-step funnel-recovered">
+                <div class="funnel-label">Recovered</div>
+                <div class="funnel-count funnel-count-green" id="f-recovered">0</div>
+                <div class="funnel-bar funnel-bar-green" id="f-recovered-bar" style="width:0%"></div>
+              </div>
+              <div class="funnel-arrow">↓</div>
+              <div class="funnel-step">
+                <div class="funnel-label">Revenue Recovered</div>
+                <div class="funnel-count funnel-count-primary" id="f-revenue">₹0</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Comparison Panel -->
+        <div class="card">
+          <div class="card-header">
+            <h2 class="card-title">Impact vs. Without Agent</h2>
+            <span class="card-hint">Quantified AI uplift</span>
+          </div>
+          <div class="card-body">
+            <div class="comparison">
+              <div class="comparison-row">
+                <div class="comparison-label">
+                  <span class="comparison-dot dot-grey"></span>
+                  Without Agent
+                </div>
+                <div class="comparison-bar-wrap">
+                  <div class="comparison-bar bar-grey" style="width:4%"></div>
+                </div>
+                <div class="comparison-value">₹0</div>
+              </div>
+              <div class="comparison-row">
+                <div class="comparison-label">
+                  <span class="comparison-dot dot-green"></span>
+                  With reclaim.
+                </div>
+                <div class="comparison-bar-wrap">
+                  <div class="comparison-bar bar-green" id="comp-bar" style="width:0%"></div>
+                </div>
+                <div class="comparison-value" id="comp-value">₹0</div>
+              </div>
+              <div class="comparison-uplift" id="comp-uplift">
+                Run the recovery agent to see your uplift ↗
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Action Breakdown -->
+            <div class="action-breakdown" id="action-breakdown">
+              <div class="ab-title">Actions Taken</div>
+              <div class="ab-rows" id="ab-rows">
+                <div class="empty-hint">No actions yet</div>
+              </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <!-- Source Breakdown -->
+            <div class="action-breakdown" id="source-breakdown">
+              <div class="ab-title">Source Recovery Impact</div>
+              <div class="ab-rows" id="sb-rows">
+                <div class="empty-hint">No source stats yet</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Failure Type Breakdown -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Failure Breakdown</h2>
+          <span class="card-hint">by failure type</span>
+        </div>
+        <div class="card-body">
+          <div class="failure-grid" id="failure-grid">
+            <div class="empty-hint">Load transactions to see breakdown</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ── TAB: AI Decision Feed ──────────────────────── -->
+    <div class="tab-content" id="tab-feed">
+      <div class="card card-full">
+        <div class="card-header">
+          <h2 class="card-title">AI Decision Feed</h2>
+          <span class="card-hint">Real-time reasoning for every recovery action</span>
+        </div>
+        <div class="card-body no-pad">
+          <div class="feed-list" id="feed-list">
+            <div class="empty-state">
+              <div class="empty-icon">🤖</div>
+              <div class="empty-title">No decisions yet</div>
+              <div class="empty-sub">Run the recovery agent to see AI reasoning for each transaction</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: Transactions ──────────────────────────── -->
+    <div class="tab-content" id="tab-transactions">
+      <div class="card card-full">
+        <div class="card-header">
+          <h2 class="card-title">Transaction Ledger</h2>
+          <div class="table-controls">
+            <select class="filter-select" id="filter-source" onchange="applyFilters()">
+              <option value="">All Sources</option>
+              <option value="payment">Payments</option>
+              <option value="checkout">Checkouts</option>
+              <option value="subscription">Subscriptions</option>
+              <option value="invoice">Invoices</option>
+            </select>
+            <select class="filter-select" id="filter-status" onchange="applyFilters()">
+              <option value="">All Status</option>
+              <option value="FAILED">Failed</option>
+              <option value="RECOVERED">Recovered</option>
+              <option value="ESCALATED">Escalated</option>
+              <option value="EXHAUSTED">Exhausted</option>
+            </select>
+            <select class="filter-select" id="filter-type" onchange="applyFilters()">
+              <option value="">All Types</option>
+              <!-- Payments -->
+              <option value="BANK_DOWNTIME">Bank Downtime</option>
+              <option value="NETWORK_TIMEOUT">Network Timeout</option>
+              <option value="UPI_TIMEOUT">UPI Timeout</option>
+              <option value="INSUFFICIENT_FUNDS">Insufficient Funds</option>
+              <option value="CARD_EXPIRED">Card Expired</option>
+              <option value="WRONG_CVV">Wrong CVV</option>
+              <option value="LIMIT_EXCEEDED">Limit Exceeded</option>
+              <option value="MANDATE_FAILED">Mandate Failed</option>
+              <option value="FRAUD_FLAGGED">Fraud Flagged</option>
+              <option value="CARD_BLOCKED">Card Blocked</option>
+              <!-- Checkouts -->
+              <option value="PRICE_DROP_OFF">Price Drop-Off</option>
+              <option value="FRICTION_DROP_OFF">Friction Drop-Off</option>
+              <option value="DISTRACTION_DROP_OFF">Distraction Drop-Off</option>
+              <!-- Subs & Invoices -->
+              <option value="WILL_PAY_SOON">Will Pay Soon</option>
+              <option value="NEED_REMINDER">Need Reminder</option>
+              <option value="HIGH_RISK_DEFAULT">High Risk Default</option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body no-pad">
+          <table class="data-table" id="txn-table">
+            <thead>
+              <tr>
+                <th onclick="sortTable('customer_name')">Customer <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('source_type')">Source <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('failure_type')">Issue <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('risk_score')">Risk Score <span class="sort-icon">↕</span></th>
+                <th>AI Action</th>
+                <th onclick="sortTable('status')">Status <span class="sort-icon">↕</span></th>
+                <th onclick="sortTable('amount')">Amount <span class="sort-icon">↕</span></th>
+              </tr>
+            </thead>
+            <tbody id="txn-tbody">
+              <tr><td colspan="7" class="table-empty">
+                <div class="empty-state"><div class="empty-icon">💳</div><div class="empty-title">Load transactions to begin</div></div>
+              </td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: Compliance ────────────────────────────── -->
+    <div class="tab-content" id="tab-compliance">
+      <div class="card card-full">
+        <div class="card-header">
+          <h2 class="card-title">Compliance Panel</h2>
+          <span class="card-hint">Enforcement of stop rules and escalation protocol</span>
+        </div>
+        <div class="card-body">
+
+          <div class="compliance-grid" id="compliance-grid">
+            <div class="compliance-stat">
+              <div class="cs-icon cs-icon-red">🛡️</div>
+              <div class="cs-value" id="c-fraud">0</div>
+              <div class="cs-label">Fraud Flagged / DNC Blocked</div>
+            </div>
+            <div class="compliance-stat">
+              <div class="cs-icon cs-icon-orange">⚠️</div>
+              <div class="cs-value" id="c-escalated">0</div>
+              <div class="cs-label">Escalated to Human</div>
+            </div>
+            <div class="compliance-stat">
+              <div class="cs-icon cs-icon-grey">🔒</div>
+              <div class="cs-value" id="c-stopped">0</div>
+              <div class="cs-label">Stop Rules Applied</div>
+            </div>
+            <div class="compliance-stat">
+              <div class="cs-icon cs-icon-blue">📋</div>
+              <div class="cs-value" id="c-p2p">0</div>
+              <div class="cs-label">Promise-to-Pay Created</div>
+            </div>
+          </div>
+
+          <div class="compliance-notice">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+            All fraud-flagged and card-blocked transactions are <strong>never retried</strong>. Outreach frequency is capped at a maximum of 3 contacts per user with a minimum 30-minute cooldown window. Do-Not-Contact (DNC) list enforced automatically.
+          </div>
+
+          <div class="card-header" style="padding: 1.25rem 0 0.75rem; border:none; margin-top: 1rem">
+            <h3 class="card-title" style="font-size:0.9rem">Compliance Events</h3>
+          </div>
+          <div id="compliance-events">
+            <div class="empty-hint">No compliance events yet</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── TAB: Audit Trail ───────────────────────────── -->
+    <div class="tab-content" id="tab-audit">
+      <div class="card card-full">
+        <div class="card-header">
+          <h2 class="card-title">Audit Trail</h2>
+          <div style="display:flex;gap:0.75rem;align-items:center">
+            <span class="card-badge" id="audit-count-badge">0 events</span>
+            <button class="btn btn-ghost btn-sm" onclick="loadAuditTrail()">Refresh</button>
+          </div>
+        </div>
+        <div class="card-body no-pad">
+          <div class="audit-list" id="audit-list">
+            <div class="empty-state" style="padding:3rem">
+              <div class="empty-icon">📋</div>
+              <div class="empty-title">Audit trail will appear after recovery runs</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /.layout -->
+
+  <!-- ── Progress Drawer ────────────────────────────── -->
+  <div class="progress-drawer" id="progress-drawer">
+    <div class="pd-header">
+      <div class="pd-title">
+        <span class="pd-spinner"></span>
+        Recovery Agent Running
+      </div>
+      <div class="pd-pct" id="pd-pct">0%</div>
+    </div>
+    <div class="pd-bar-outer"><div class="pd-bar-inner" id="pd-bar" style="width:0%"></div></div>
+    <div class="pd-log" id="pd-log"></div>
+  </div>
+
+  <!-- ── Transaction Detail Modal ───────────────────── -->
+  <div class="modal-overlay" id="modal-overlay" onclick="closeModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <h3 id="modal-title">Transaction Detail</h3>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ── Voice Agent Call Modal ─────────────────────── -->
+  <div class="modal-overlay" id="voice-modal-overlay" onclick="closeVoiceModal()">
+    <div class="modal" onclick="event.stopPropagation()" style="max-width: 450px;">
+      <div class="modal-header" style="background: #7C3AED; color: white;">
+        <h3 id="voice-modal-title">📞 reclaim. Voice Assistant</h3>
+        <button class="modal-close" onclick="closeVoiceModal()" style="color: white; border-color: rgba(255,255,255,0.4); background: transparent;">✕</button>
+      </div>
+      <div class="modal-body" style="text-align: center; padding: 2rem;">
+        <div class="voice-wave" style="margin-bottom: 1.5rem;">
+          <span class="dot-ring" style="display:inline-block; width: 64px; height: 64px; border-radius: 50%; background: rgba(124,58,237,0.2); animation: pulse-ring 1.5s infinite; line-height: 64px; font-size: 1.8rem;">🎙️</span>
+        </div>
+        <h4 id="voice-call-status" style="font-weight: 700; margin-bottom: 0.5rem; color: #1F2937;">Calling customer...</h4>
+        <p id="voice-call-contact" style="color: #6B7280; font-size: 0.85rem; margin-bottom: 1.5rem;">+91 98765 43210</p>
+        <div id="voice-script-box" style="background: #F5F3FF; border-left: 4px solid #7C3AED; padding: 1rem; border-radius: 6px; text-align: left; font-size: 0.9rem; color: #5B21B6; font-style: italic; margin-bottom: 1.5rem; line-height: 1.5;">
+          Loading call script...
+        </div>
+        <button class="btn btn-outline" onclick="stopVoiceCall()" style="border-color: #DC2626; color: #DC2626; width: 100%;">Hang Up</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Toasts ─────────────────────────────────────── -->
+  <div class="toast-stack" id="toast-stack"></div>
+
+  <script src="/static/app.js?v=3"></script>
+</body>
+</html>

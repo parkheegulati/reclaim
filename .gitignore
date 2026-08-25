@@ -1,0 +1,21 @@
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Environment variables files
+.env
+backend/.env
+
+# Local Databases
+backend/recovery_agent.db
+*.db
+*.sqlite
+
+# Presentation Slide Deck (per user request)
+frontend/presentation.html
+
+# OS metadata
+.DS_Store
+Thumbs.db

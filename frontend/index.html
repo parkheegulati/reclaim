@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>reclaim. — Stop losing money on failed payments</title>
+  <meta name="description" content="AI that brings every rupee back. Detect failed payments, diagnose root cause, and recover lost revenue — automatically." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/static/landing.css?v=3" />
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav class="nav">
+    <div class="nav-inner">
+      <div class="nav-logo">reclaim<span class="nav-dot">.</span></div>
+      <div class="nav-links">
+        <a href="#how" class="nav-link">How it works</a>
+        <a href="#metrics" class="nav-link">Results</a>
+        <a href="#compliance" class="nav-link">Compliance</a>
+      </div>
+      <a href="/dashboard" class="nav-cta">
+        Open Dashboard
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+      <div class="hero-grid"></div>
+    </div>
+
+    <div class="hero-inner">
+
+      <h1 class="hero-h1">
+        Stop losing money<br/>on failed payments.
+      </h1>
+      <p class="hero-tagline">AI that brings every rupee back.</p>
+      <p class="hero-sub">
+        reclaim. detects failed payments, diagnoses root cause with Gemini AI,<br class="br-desktop"/>
+        and executes the right recovery action — automatically.
+      </p>
+
+      <div class="hero-actions">
+        <a href="/dashboard" class="btn-hero-primary">
+          Launch Dashboard
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+        <a href="#how" class="btn-hero-ghost">See how it works</a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hstat">
+          <div class="hstat-value" id="hs-recovered">₹0</div>
+          <div class="hstat-label">Recovered live</div>
+        </div>
+        <div class="hstat-divider"></div>
+        <div class="hstat">
+          <div class="hstat-value" id="hs-rate">0%</div>
+          <div class="hstat-label">Recovery rate</div>
+        </div>
+        <div class="hstat-divider"></div>
+        <div class="hstat">
+          <div class="hstat-value" id="hs-txns">0</div>
+          <div class="hstat-label">Transactions</div>
+        </div>
+        <div class="hstat-divider"></div>
+        <div class="hstat">
+          <div class="hstat-value" id="hs-time">—</div>
+          <div class="hstat-label">Avg recovery time</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hero terminal card -->
+    <div class="hero-visual">
+      <div class="flow-card">
+        <div class="flow-header">
+          <div class="flow-dots">
+            <div class="flow-dot fd-red"></div>
+            <div class="flow-dot fd-yellow"></div>
+            <div class="flow-dot fd-green"></div>
+          </div>
+          <span class="flow-title">reclaim. · live agent run</span>
+        </div>
+        <div class="flow-body" id="flow-body"></div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="section-inner">
+      <div class="section-eyebrow">How it works</div>
+      <h2 class="section-h2">Three steps. Full recovery.</h2>
+      <p class="section-sub">From detection to rupees — completely automated.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-icon-wrap step-blue">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          </div>
+          <h3 class="step-title">Detect &amp; Classify</h3>
+          <p class="step-desc">Ingests failed payments from Razorpay. Classifies every failure by type — transient errors, soft declines, hard blocks. Risk-scored and prioritised by recovery value.</p>
+          <div class="step-tags">
+            <span class="stag stag-blue">TRANSIENT_FAILURE</span>
+            <span class="stag stag-blue">SOFT_DECLINE</span>
+            <span class="stag stag-grey">HARD_DECLINE</span>
+          </div>
+        </div>
+
+        <div class="step-arrow">→</div>
+
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-icon-wrap step-purple">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <h3 class="step-title">AI Diagnose &amp; Decide</h3>
+          <p class="step-desc">Gemini AI analyses root cause and customer sentiment. Selects the optimal action — auto-retry, payment link, EMI, or escalate — with confidence score and full reasoning.</p>
+          <div class="step-tags">
+            <span class="stag stag-purple">AUTO_RETRY</span>
+            <span class="stag stag-purple">PAYMENT_LINK</span>
+            <span class="stag stag-orange">ESCALATE</span>
+          </div>
+        </div>
+
+        <div class="step-arrow">→</div>
+
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-icon-wrap step-green">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3 class="step-title">Recover &amp; Audit</h3>
+          <p class="step-desc">Executes bounded workflow — retries with idempotency, generates Razorpay payment links, sends Hinglish messages, logs every action with timestamp, reasoning, and outcome.</p>
+          <div class="step-tags">
+            <span class="stag stag-green">₹ RECOVERED</span>
+            <span class="stag stag-green">FULL AUDIT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE METRICS -->
+  <section class="section section-dark" id="metrics">
+    <div class="section-inner">
+      <div class="section-eyebrow eyebrow-light">Live Results</div>
+      <h2 class="section-h2 h2-light">Real numbers. Every run.</h2>
+      <p class="section-sub sub-light">Live data from the reclaim. agent — updated in real time.</p>
+
+      <div class="ms-grid">
+        <div class="ms-card ms-highlight">
+          <div class="ms-top">₹</div>
+          <div class="ms-val" id="ms-recovered">₹0</div>
+          <div class="ms-lbl">Total Recovered</div>
+          <div class="ms-sub">vs ₹0 without agent</div>
+        </div>
+        <div class="ms-card">
+          <div class="ms-top">📈</div>
+          <div class="ms-val" id="ms-rate">0%</div>
+          <div class="ms-lbl">Recovery Rate</div>
+          <div class="ms-sub" id="ms-rate-sub">across all transactions</div>
+        </div>
+        <div class="ms-card">
+          <div class="ms-top">⚡</div>
+          <div class="ms-val" id="ms-retries">0</div>
+          <div class="ms-lbl">Auto-Retries</div>
+          <div class="ms-sub">zero customer friction</div>
+        </div>
+        <div class="ms-card">
+          <div class="ms-top">🔗</div>
+          <div class="ms-val" id="ms-links">0</div>
+          <div class="ms-lbl">Payment Links Sent</div>
+          <div class="ms-sub">via SMS + Email</div>
+        </div>
+        <div class="ms-card">
+          <div class="ms-top">⏱️</div>
+          <div class="ms-val" id="ms-time">—</div>
+          <div class="ms-lbl">Avg Recovery Time</div>
+          <div class="ms-sub">per transaction</div>
+        </div>
+        <div class="ms-card">
+          <div class="ms-top">🛡️</div>
+          <div class="ms-val" id="ms-stopped">0</div>
+          <div class="ms-lbl">Fraud Blocked</div>
+          <div class="ms-sub">stop rules enforced</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLIANCE -->
+  <section class="section" id="compliance">
+    <div class="section-inner two-col-sec">
+      <div class="comp-left">
+        <div class="section-eyebrow">Compliance first</div>
+        <h2 class="section-h2" style="text-align:left">Every rupee recovered.<br/>Every rule respected.</h2>
+        <p class="section-sub" style="text-align:left;max-width:420px">
+          reclaim. is defence-only. Fraud-flagged transactions are blocked immediately.
+          All actions are explainable, bounded, and logged.
+        </p>
+        <ul class="comp-list">
+          <li><span class="comp-check">✓</span><span><strong>Hard decline gate</strong> — FRAUD_FLAGGED never auto-retried</span></li>
+          <li><span class="comp-check">✓</span><span><strong>Max 3 retries</strong> — cooldown enforced per failure type</span></li>
+          <li><span class="comp-check">✓</span><span><strong>Promise-to-pay</strong> — escalated cases tracked with follow-up dates</span></li>
+          <li><span class="comp-check">✓</span><span><strong>Full audit trail</strong> — timestamp, action, reasoning, outcome per event</span></li>
+          <li><span class="comp-check">✓</span><span><strong>RBI-compliant</strong> — no offense-capable actions whatsoever</span></li>
+        </ul>
+      </div>
+      <div class="comp-right">
+        <div class="audit-preview">
+          <div class="ap-header">
+            <span class="ap-title">📋 Audit Trail · Live</span>
+            <span class="ap-badge">verified</span>
+          </div>
+          <div class="ap-events" id="ap-events">
+            <div class="ap-empty">Loading audit events...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HINGLISH -->
+  <section class="section section-hinglish">
+    <div class="section-inner text-center">
+      <div class="section-eyebrow">Built for Bharat</div>
+      <h2 class="section-h2">Talks to your customers<br/>in their language.</h2>
+      <p class="section-sub">reclaim. generates personalised recovery messages in Hinglish — warm, clear, and effective.</p>
+
+      <div class="hcards">
+        <div class="hcard">
+          <div class="hcard-type">BANK_DOWNTIME</div>
+          <p class="hcard-msg">"Aapka bank thodi der ke liye unavailable tha. Hum automatically retry kar rahe hain — aapko kuch karne ki zaroorat nahi. ⏳"</p>
+          <div class="hcard-action">⚡ AUTO_RETRY triggered</div>
+        </div>
+        <div class="hcard hcard-featured">
+          <div class="hcard-type">INSUFFICIENT_FUNDS</div>
+          <p class="hcard-msg">"Sir, aapka payment process nahi ho saka kyunki account mein balance kam tha. Main aapko ek naya payment link bhej raha/rahi hoon — UPI ya doosra card use kar sakte hain. 🙏"</p>
+          <div class="hcard-action">🔗 PAYMENT_LINK sent</div>
+        </div>
+        <div class="hcard">
+          <div class="hcard-type">FRAUD_FLAGGED</div>
+          <p class="hcard-msg">"Aapka transaction security review ke liye roka gaya hai. Hamari team 24 ghante mein aapse contact karegi. Reference ID save kar lijiye. 🛡️"</p>
+          <div class="hcard-action">🚨 ESCALATED (compliance)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="section section-cta">
+    <div class="section-inner text-center">
+      <h2 class="cta-h2">Ready to reclaim<br/>your lost revenue?</h2>
+      <p class="cta-sub">Open the live dashboard. Load your failed payments. Watch reclaim. recover them in seconds.</p>
+      <a href="/dashboard" class="btn-hero-primary btn-large">
+        Open Dashboard →
+      </a>
+      <div class="cta-note">Razorpay test-mode · Runs in under 10 seconds · No config needed</div>
+    </div>
+  </section>
+
+  <!-- AUTH MODAL -->
+  <div class="modal-overlay" id="auth-modal">
+    <div class="auth-card">
+      <button class="close-modal" id="btn-close-auth">&times;</button>
+      
+      <div class="auth-header">
+        <h3 class="auth-title">Welcome to reclaim.</h3>
+        <p class="auth-subtitle" id="auth-subtitle">Log in to view your dashboard</p>
+      </div>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="toggleAuthTab('login')">Log In</button>
+        <button class="auth-tab" id="tab-register" onclick="toggleAuthTab('register')">Register</button>
+      </div>
+
+      <div class="auth-error" id="auth-error">Error message here</div>
+
+      <!-- Login Form -->
+      <form id="form-login" onsubmit="handleAuthSubmit(event, 'login')">
+        <div class="form-group">
+          <label class="form-label" for="login-email">Email Address</label>
+          <input class="form-input" type="email" id="login-email" required placeholder="name@company.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="login-password">Password</label>
+          <input class="form-input" type="password" id="login-password" required placeholder="••••••••" />
+        </div>
+        <button class="auth-btn" type="submit">Sign In</button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="form-register" onsubmit="handleAuthSubmit(event, 'register')" style="display: none;">
+        <div class="form-group">
+          <label class="form-label" for="reg-name">Company Name</label>
+          <input class="form-input" type="text" id="reg-name" required placeholder="Bharat Retail Co." />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-email">Email Address</label>
+          <input class="form-input" type="email" id="reg-email" required placeholder="name@company.com" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="reg-password">Password</label>
+          <input class="form-input" type="password" id="reg-password" required placeholder="Minimum 6 characters" />
+        </div>
+        <button class="auth-btn" type="submit">Create Account</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-logo">reclaim<span>.</span></div>
+      <div class="footer-tagline">Stop losing money on failed payments. AI that brings every rupee back.</div>
+      <div class="footer-meta">Built for Razorpay Hackathon 2026 · Track 03 · AI Revenue Recovery</div>
+    </div>
+  </footer>
+
+  <script src="/static/landing.js?v=3"></script>
+</body>
+</html>
