@@ -1,4 +1,4 @@
-# 💰 reclaim. — AI-Driven Revenue Recovery Agent
+# 💰 reclaim — AI-Driven Revenue Recovery Agent
 
 > **Turn payment failures into successful checkouts — automatically, compliantly, and at scale.**  
 > Built for merchants who want to bring every single rupee back.
