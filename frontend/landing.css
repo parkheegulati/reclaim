@@ -276,16 +276,16 @@ body { font-family: var(--font); background: var(--dark-bg); color: var(--dark-t
 @media (max-width: 860px) { .ms-grid { grid-template-columns: 1fr 1fr; } }
 
 .ms-card {
-  background: linear-gradient(180deg, rgba(255,255,255,0.04) 0%, rgba(255,255,255,0.01) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: var(--light-bg); /* White background */
+  border: 1px solid var(--light-border);
   border-radius: var(--radius-md); padding: 1.75rem 1.5rem;
   text-align: center; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
   position: relative; overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
 }
 .ms-card::before {
   content: ''; position: absolute; inset: 0;
-  background: radial-gradient(circle at top center, rgba(11,114,231,0.15), transparent 70%);
+  background: radial-gradient(circle at top center, rgba(11,114,231,0.06), transparent 70%);
   opacity: 0; transition: opacity 0.3s ease;
   pointer-events: none;
 }
@@ -295,16 +295,16 @@ body { font-family: var(--font); background: var(--dark-bg); color: var(--dark-t
 .ms-card:hover {
   transform: translateY(-4px);
   border-color: rgba(11, 114, 231, 0.3);
-  box-shadow: 0 12px 30px rgba(11, 114, 231, 0.15), 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 12px 30px rgba(11, 114, 231, 0.08), 0 4px 10px rgba(0, 0, 0, 0.03);
 }
 .ms-highlight {
-  border-color: rgba(11, 114, 231, 0.45);
-  background: linear-gradient(180deg, rgba(11, 114, 231, 0.12) 0%, rgba(11, 114, 231, 0.03) 100%);
-  box-shadow: 0 8px 24px rgba(11, 114, 231, 0.1);
+  border-color: rgba(11, 114, 231, 0.3);
+  background: #EFF6FF; /* Very light blue background */
+  box-shadow: 0 8px 24px rgba(11, 114, 231, 0.05);
 }
 .ms-highlight:hover {
-  border-color: rgba(11, 114, 231, 0.7);
-  box-shadow: 0 16px 40px rgba(11, 114, 231, 0.25), 0 4px 12px rgba(0, 0, 0, 0.2);
+  border-color: rgba(11, 114, 231, 0.5);
+  box-shadow: 0 16px 40px rgba(11, 114, 231, 0.12), 0 4px 10px rgba(0, 0, 0, 0.03);
 }
 .ms-top {
   font-size: 1.75rem; margin-bottom: 0.75rem;
@@ -315,19 +315,16 @@ body { font-family: var(--font); background: var(--dark-bg); color: var(--dark-t
   transform: scale(1.15) rotate(5deg);
 }
 .ms-val {
-  font-size: 2.1rem; font-weight: 800; color: white;
+  font-size: 2.1rem; font-weight: 800; color: var(--light-text);
   font-variant-numeric: tabular-nums; margin-bottom: 0.35rem;
   letter-spacing: -0.02em;
   transition: all 0.5s;
 }
 .ms-highlight .ms-val {
-  background: linear-gradient(135deg, #FFF 30%, #60A5FA 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--primary); /* Original Blue */
 }
-.ms-lbl { font-size: 0.85rem; font-weight: 700; color: #E2E8F0; margin-bottom: 0.3rem; letter-spacing: -0.01em; }
-.ms-sub { font-size: 0.75rem; color: #8e9fae; line-height: 1.4; }
+.ms-lbl { font-size: 0.85rem; font-weight: 700; color: var(--light-text); margin-bottom: 0.3rem; letter-spacing: -0.01em; }
+.ms-sub { font-size: 0.75rem; color: var(--light-muted); line-height: 1.4; }
 
 /* ── COMPLIANCE ──────────────────────────────────────── */
 .two-col-sec { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
